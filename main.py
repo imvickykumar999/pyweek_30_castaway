@@ -44,7 +44,7 @@ level.goat.collider = 'mesh'
 
 
 from ursina.prefabs.first_person_controller import FirstPersonController
-player = FirstPersonController(position=level.start_point.position, speed=10)
+player = FirstPersonController(position=level.start_point.position, speed=10, gravity=.3)
 level.start_point.enabled = False
 
 
@@ -134,6 +134,9 @@ def input(key):
 
 orginal_chest_color = level.chest.color
 def update():
+    if player.y < -10:
+        player.y = 100
+
     if not level.bow.enabled and mouse.hovered_entity in (level.chest, level.chest_lid) and distance_xz(player.position, level.chest.position) < 6:
         level.chest.color = color.color(90, .4, .8)
         level.chest_lid.color = color.color(90, .4, .8)
